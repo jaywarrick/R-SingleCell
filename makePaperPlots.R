@@ -1,12 +1,11 @@
 rm(list=ls())
-setwd('/Users/jaywarrick/GoogleDrive/SingleCell/Figures')
-source('/Users/jaywarrick/GoogleDrive/SingleCell/Figures/plotHelperFunctions.R')
+source('/Users/jaywarrick/Public/DropBox/R-SingleCell/plotHelperFunctions.R')
 library(Hmisc)
 
 # Read the raw and summary data
-data <- read.table('/users/jaywarrick/GoogleDrive/SingleCell/AndreaMatlabFiles/JayRFiles/M51R_Data_1Cell.txt', header=TRUE)
-params <- read.table('/Users/jaywarrick/GoogleDrive/SingleCell/AndreaMatlabFiles/JayRFiles/TrajectoryParameters_20131027.txt', header=TRUE)
-thresholds <- read.table('/Users/jaywarrick/GoogleDrive/SingleCell/AndreaMatlabFiles/JayRFiles/M51R_Thresholds.txt', header=TRUE)
+data <- read.table('/users/jaywarrick/Google Drive/SingleCellLatest/Processed Data/M51R_Data_1Cell.txt', header=TRUE)
+params <- read.table('/Users/jaywarrick/Google Drive/SingleCellLatest/Processed Data/TrajectoryParameters_20131027.txt', header=TRUE)
+thresholds <- read.table('/Users/jaywarrick/Google Drive/SingleCellLatest/Processed Data/M51R_Thresholds.txt', header=TRUE)
 
 # Define all the populations that will be potted
 pop_MaxInt.Gp <- subset(params, Flag.R & Flag.G & (Death==1 | Death==2)) # Remove no plateau rois
@@ -47,12 +46,15 @@ R <- 'darkred'
 H <- 4.7
 W <- 4.5
 
-source('/Users/jaywarrick/GoogleDrive/SingleCell/Figures/Figure_6.R')
-source('/Users/jaywarrick/GoogleDrive/SingleCell/Figures/Figure_7.R')
-source('/Users/jaywarrick/GoogleDrive/SingleCell/Figures/Figure_8.R')
-source('/Users/jaywarrick/GoogleDrive/SingleCell/Figures/Figure_9.R')
-source('/Users/jaywarrick/GoogleDrive/SingleCell/Figures/Figure_10.R')
-source('/Users/jaywarrick/GoogleDrive/SingleCell/Figures/Figure_11.R')
-source('/Users/jaywarrick/GoogleDrive/SingleCell/Figures/Figure_12.R')
-source('/Users/jaywarrick/GoogleDrive/SingleCell/Figures/Tables.R')
+source('/Users/jaywarrick/Public/DropBox/R-SingleCell/plotScriptFACS.R')
+source('/Users/jaywarrick/Public/DropBox/R-SingleCell/plotScriptMicroscope.R')
+source('/Users/jaywarrick/Public/DropBox/R-SingleCell/plotScriptMicrowell.R')
+source('/Users/jaywarrick/Public/DropBox/R-SingleCell/Figure_6.R')
+source('/Users/jaywarrick/Public/DropBox/R-SingleCell/Figure_7.R')
+source('/Users/jaywarrick/Public/DropBox/R-SingleCell/Figure_8.R')
+source('/Users/jaywarrick/Public/DropBox/R-SingleCell/Figure_9.R')
+source('/Users/jaywarrick/Public/DropBox/R-SingleCell/Figure_10.R')
+source('/Users/jaywarrick/Public/DropBox/R-SingleCell/Figure_11.R')
+source('/Users/jaywarrick/Public/DropBox/R-SingleCell/Figure_12.R')
+source('/Users/jaywarrick/Public/DropBox/R-SingleCell/Tables.R')
 

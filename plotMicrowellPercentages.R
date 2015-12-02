@@ -15,13 +15,13 @@
 # xTicks=c(0,100,1000,10000,100000,1000000)
 # yTicks=xTicks
 
-source('/Users/jaywarrick/Public/DropBox/GitHub/R-SingleCell/logicle.R')
-source('/Users/jaywarrick/Public/DropBox/GitHub/R-SingleCell/plotFACS.R')
-source('/Users/jaywarrick/Public/DropBox/GitHub/R-SingleCell/getSingleStats.R')
-source('/Users/jaywarrick/Public/DropBox/GitHub/R-SingleCell/getDoubleStats.R')
-source('/Users/jaywarrick/Public/DropBox/GitHub/R-SingleCell/drawStats.R')
-source('/Users/jaywarrick/Public/DropBox/GitHub/R-SingleCell/drawLogicleAxis.R')
-source('/Users/jaywarrick/Public/DropBox/GitHub/R-SingleCell/plotHelperFunctions.R')
+source('/Users/jaywarrick/Google Drive/SingleCell/FACS Data/R FACS Plotting Functions/logicle.R')
+source('/Users/jaywarrick/Google Drive/SingleCell/FACS Data/R FACS Plotting Functions/plotFACS.R')
+source('/Users/jaywarrick/Google Drive/SingleCell/FACS Data/R FACS Plotting Functions/getSingleStats.R')
+source('/Users/jaywarrick/Google Drive/SingleCell/FACS Data/R FACS Plotting Functions/getDoubleStats.R')
+source('/Users/jaywarrick/Google Drive/SingleCell/FACS Data/R FACS Plotting Functions/drawStats.R')
+source('/Users/jaywarrick/Google Drive/SingleCell/FACS Data/R FACS Plotting Functions/drawLogicleAxis.R')
+source('/Users/jaywarrick/Google Drive/SingleCell/Figures/plotHelperFunctions.R')
 library(flowCore)
 library(flowViz)
 library(MASS)
@@ -29,16 +29,15 @@ library(RColorBrewer)
 library(foreign)
 library(hash)
 
-microscopeFolder <- '/Users/jaywarrick/Google Drive/SingleCellLatest/Compiled Data/Microscope Data/File - Data Table/'
-setwd('/Users/jaywarrick/Google Drive/SingleCellLatest/Figures/Plots/Microscope')
+microscopeFolder <- '/Users/jaywarrick/Google Drive/SingleCellLatest/Processed Data/'
 
-# read in the appropriate microscope data
-# We want times 19, 55, and 91 from the microscope data
+# Move to the folder where Microwell plots are kept
+setwd('/Users/jaywarrick/Google Drive/SingleCellLatest/Figures/Plots/Microwell/')
 
 results <- list()
 
-data1 <- read.arff(paste(microscopeFolder, 'x0_y0.arff', sep=''))
-WT0 <- data.frame(G=subset(data1, Time=='0' & Measurement=='G')$Value, R=subset(data1, Time=='0' & Measurement=='R')$Value)
+data1 <- read.table(paste0(microscopeFolder, 'MasterDataFile.txt'), header=TRUE)
+WT0 <- data.frame(G=subset(data1, Time=='0')$G.Final, R=subset(data1, Time=='0')$R.Final)
 medWT <- c(median(WT0$G), median(WT0$R))
 madWT <- c(mad(WT0$G), mad(WT0$R))
 threshWT <- medWT + 3*madWT
@@ -94,7 +93,7 @@ fun <- function(hashObj, hashKey)
     return(hashObj[[hashKey]])
 }
 times2 <- (10/60)*as.numeric(as.character(times))+2.833333
-pdf('Microscope_WT_Summary.pdf',width=1.1*W,height=1.1*H)
+pdf('WT_Percentages_Plot.pdf',width=1.1*W,height=1.1*H)
 paperParams(1,1)
 par(mar = c(3.7,3.7,0.8,0.8)); # beyond plot frame [b,l,t,r]
 par(mgp = c(2,0.8,0)); # placement of axis labels [1], numbers [2] and symbols[3]
@@ -115,7 +114,7 @@ dev.off()
 
 ################ Plot 2 ###############
 times2 <- (10/60)*as.numeric(as.character(times))+2.833333
-pdf('Microscope_M51R_Summary.pdf',width=1.1*W,height=1.1*H)
+pdf('M51R_Percentages_Plot.pdf',width=1.1*W,height=1.1*H)
 paperParams(1,1)
 par(mar = c(3.7,3.7,0.8,0.8)); # beyond plot frame [b,l,t,r]
 par(mgp = c(2,0.8,0)); # placement of axis labels [1], numbers [2] and symbols[3]
@@ -136,7 +135,7 @@ dev.off()
 
 ################ Plot 3 ###############
 times3 <- (10/60)*as.numeric(as.character(times))+2.833333
-pdf('Microscope_MOCK_Summary.pdf',width=1.1*W,height=1.1*H)
+pdf('MOCK_Percentages_Plot.pdf',width=1.1*W,height=1.1*H)
 paperParams(1,1)
 par(mar = c(3.7,3.7,0.8,0.8)); # beyond plot frame [b,l,t,r]
 par(mgp = c(2,0.8,0)); # placement of axis labels [1], numbers [2] and symbols[3]

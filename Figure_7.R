@@ -1,10 +1,11 @@
 
-source('/Users/jaywarrick/GoogleDrive/SingleCell/FACS Data/R FACS Plotting Functions/logicle.R')
-source('/Users/jaywarrick/GoogleDrive/SingleCell/FACS Data/R FACS Plotting Functions/plotFACS.R')
-source('/Users/jaywarrick/GoogleDrive/SingleCell/FACS Data/R FACS Plotting Functions/getSingleStats.R')
-source('/Users/jaywarrick/GoogleDrive/SingleCell/FACS Data/R FACS Plotting Functions/getDoubleStats.R')
-source('/Users/jaywarrick/GoogleDrive/SingleCell/FACS Data/R FACS Plotting Functions/drawStats.R')
-source('/Users/jaywarrick/GoogleDrive/SingleCell/FACS Data/R FACS Plotting Functions/drawLogicleAxis.R')
+source('/Users/jaywarrick/Public/DropBox/GitHub/R-SingleCell/logicle.R')
+source('/Users/jaywarrick/Public/DropBox/GitHub/R-SingleCell/plotFACS.R')
+source('/Users/jaywarrick/Public/DropBox/GitHub/R-SingleCell/getSingleStats.R')
+source('/Users/jaywarrick/Public/DropBox/GitHub/R-SingleCell/getDoubleStats.R')
+source('/Users/jaywarrick/Public/DropBox/GitHub/R-SingleCell/drawStats.R')
+source('/Users/jaywarrick/Public/DropBox/GitHub/R-SingleCell/drawLogicleAxis.R')
+source('/Users/jaywarrick/Public/Dropbox/GitHub/R-SingleCell/plotHelperFunctions.R')
 library(flowCore)
 library(flowViz)
 library(MASS)
@@ -13,6 +14,9 @@ library(foreign)
 library(hash)
 
 # Have data object prepared (i.e. use preProcessing.R & postProcessing.R) or read in the appropriate microscope data
+data <- read.table('/users/jaywarrick/Google Drive/SingleCellLatest/Processed Data/N1_Data_1Cell.txt', header=TRUE)
+thresholds <- read.table('/Users/jaywarrick/Google Drive/SingleCellLatest/Processed Data/N1_Thresholds.txt', header=TRUE)
+setwd('/Users/jaywarrick/Google Drive/SingleCellLatest/Figure Masters/Plots/Microwell')
 
 threshR <- thresholds$R
 threshG <- thresholds$G
@@ -25,14 +29,14 @@ fractions <- data.frame(t=numeric(0), pp=numeric(0), pm=numeric(0), mp=numeric(0
 for(frame in unique(data$Time))
 {
     temp <- subset(data, Time==frame & (Flag.R | Flag.G))
-    pdf(paste('MicrowellFACS_',temp$Time[1],'.pdf',sep=''),width=1.1*W,height=1.1*H)
+    pdf(paste('MicrowellFACS_N1_',temp$Time[1],'.pdf',sep=''),width=1.1*W,height=1.1*H)
     stats <- plotFACS(title='dummy', temp, xThresh=threshG, yThresh=threshR, xTransition=threshG, yTransition=threshR, xmax=4000, ymax=13000, yCross=0.0007)
     fractions <- rbind(fractions, data.frame(t=temp$time[1], pp=stats$'XY % ++', pm=stats$'XY % +-', mp=stats$'XY % -+', mm=stats$'XY % --'))
     dev.off()
     #     browser()
 }
 
-pdf('Figure_7b.pdf', height=1.1*H, width=1.1*W)
+pdf('MicrowellSummary_N1.pdf', height=1.1*H, width=1.1*W)
 paperParams(1,1)
 par(mar = c(3.7,3.7,0.8,0.8)); # beyond plot frame [b,l,t,r]
 par(mgp = c(2,0.8,0)); # placement of axis labels [1], numbers [2] and symbols[3]

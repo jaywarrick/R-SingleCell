@@ -18,5 +18,5 @@ drawLogicleAxis <- function(ticks=c(-10,1,10,100,1000,10000,100000,1000000), tic
     {
         axis(axisNum, at=ticks, labels=tickLabels)
     }
-    
+
 }
